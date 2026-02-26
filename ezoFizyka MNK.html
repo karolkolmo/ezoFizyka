@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ezoFizyka & Mentalne Narzędzia Kwantowe</title>
+    <style>
+        :root {
+            --color-bg-base: #0f172a;
+            --color-bg-elevated: #1e293b;
+            --color-bg-surface: #334155;
+            --color-text-primary: #f1f5f9;
+            --color-text-secondary: #cbd5e1;
+            --color-text-muted: #94a3b8;
+            --color-accent: #38bdf8;
+            --color-accent-hover: #0ea5e9;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--color-bg-base) 0%, #1a2332 100%);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(14, 165, 233, 0.05) 100%);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--color-accent) 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .equation-box {
+            background: var(--color-bg-elevated);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid var(--color-accent);
+            margin: 30px 0;
+            text-align: center;
+            font-size: 1.5rem;
+            font-family: 'Courier New', monospace;
+            color: var(--color-accent);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+        }
+
+        .section {
+            background: var(--color-bg-elevated);
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(56, 189, 248, 0.15);
+        }
+
+        h2 {
+            color: var(--color-accent);
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 2px solid var(--color-accent);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: var(--color-text-primary);
+            margin: 25px 0 15px 0;
+            font-size: 1.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .card {
+            background: var(--color-bg-surface);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--color-accent);
+            box-shadow: 0 5px 20px rgba(56, 189, 248, 0.3);
+        }
+
+        .card h4 {
+            color: var(--color-accent);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .exercise {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid var(--color-success);
+        }
+
+        .exercise-title {
+            color: var(--color-success);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .exercise-title::before {
+            content: "⚡";
+            font-size: 1.5rem;
+        }
+
+        .steps {
+            margin-top: 15px;
+        }
+
+        .step {
+            background: var(--color-bg-elevated);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 3px solid var(--color-accent);
+        }
+
+        .step-number {
+            color: var(--color-accent);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .interactive-btn {
+            background: linear-gradient(135deg, var(--color-accent) 0%, #0ea5e9 100%);
+            color: var(--color-bg-base);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .interactive-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(56, 189, 248, 0.4);
+        }
+
+        .interactive-btn:active {
+            transform: scale(0.98);
+        }
+
+        .formula-explanation {
+            background: rgba(56, 189, 248, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .highlight {
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--color-text-secondary);
+            border-left: 4px solid var(--color-warning);
+            padding-left: 20px;
+            margin: 25px 0;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            color: var(--color-text-secondary);
+        }
+
+        li {
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--color-bg-surface);
+            color: var(--color-text-secondary);
+            padding: 12px 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--color-accent);
+            color: var(--color-bg-base);
+            border-color: var(--color-accent);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .timer-display {
+            font-size: 3rem;
+            text-align: center;
+            color: var(--color-accent);
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .subtitle { font-size: 1rem; }
+            .section { padding: 25px; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ezoFizyka</h1>
+            <p class="subtitle">Kwantowy Software Ciała i Duszy</p>
+            <p style="color: var(--color-text-secondary);">Integracja ewolucji biologicznej (Hardware) z ewolucją duchową (Software)</p>
+        </header>
+
+        <section class="section">
+            <h2>🌌 Podstawy ezoFizyki</h2>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTab('reality')">Dwupoziomowa Rzeczywistość</button>
+                <button class="tab-btn" onclick="showTab('equation')">Równanie Rzeczywistości</button>
+                <button class="tab-btn" onclick="showTab('forces')">Hierarchia Sił</button>
+            </div>
+
+            <div id="reality" class="tab-content active">
+                <h3>Architektura Rzeczywistości</h3>
+                <p>Rzeczywistość nie jest płaska - ma głębię. Składa się z dwóch poziomów:</p>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h4>Poziom Mierzalny (ℝ)</h4>
+                        <ul>
+                            <li><strong>Liczby rzeczywiste</strong></li>
+                            <li>Fizyka standardowa</li>
+                            <li>Mechanika Newtona</li>
+                            <li>Materia</li>
+                            <li><strong>Wydruk</strong> rzeczywistości</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h4>Poziom Niemierzalny (ℂ)</h4>
+                        <ul>
+                            <li><strong>Liczby zespolone</strong></li>
+                            <li>Funkcje falowe</li>
+                            <li>Świadomość</li>
+                            <li>Duch</li>
+                            <li><strong>Kod źródłowy</strong> rzeczywistości</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Poziom Niemierzalny nie jest 'wyimaginowany'. Jest matematycznie konieczny do wyjaśnienia przyczyny i skutku."
+                </div>
+            </div>
+
+            <div id="equation" class="tab-content">
+                <h3>Redefinicja Równania Schrödingera</h3>
+                
+                <div class="equation-box">
+                    iℏ ∂ψ/∂t = Ĥψ
+                </div>
+                
+                <div class="equation-box">
+                    Ĥ = H<sub>wa</sub> · H<sub>ww</sub> · H<sub>1</sub>
+                </div>
+                
+                <div class="formula-explanation">
+                    <h4>Dekompozycja Hamiltonianu:</h4>
+                    <ul>
+                        <li><span class="highlight">H₁ - Siły Standardowe:</span> Elektromagnetyzm, siły jądrowe. Indeterministyczne (losowe).</li>
+                        <li><span class="highlight">H<sub>ww</sub> - Wolna Wola Człowieka:</span> Obserwator. Indeterministyczna (wybór).</li>
+                        <li><span class="highlight">H<sub>wa</sub> - Wola Absolutu:</span> Bóg. Jedyna siła deterministyczna (pewność 100%).</li>
+                    </ul>
+                </div>
+                
+                <p>Nauka standardowa widzi tylko H₁, co prowadzi do światopoglądu czysto przypadkowego. Uwzględniając Wolną Wolę i Absolut, równanie staje się kompletne.</p>
+            </div>
+
+            <div id="forces" class="tab-content">
+                <h3>Hierarchia Sił - Kto Kontroluje Wynik?</h3>
+                
+                <div class="card" style="margin-bottom: 20px;">
+                    <h4 style="color: #f59e0b;">🔺 H<sub>wa</sub> - WOLA ABSOLUTU</h4>
+                    <p>Jedyny Determinant (pewność 100%)</p>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem;">Dowód konfliktu deterministycznego: Może istnieć tylko jeden Determinant.</p>
+                </div>
+                
+                <div class="card" style="margin-bottom: 20px;">
+                    <h4 style="color: var(--color-accent);">🔻 H<sub>ww</sub> - WOLNA WOLA CZŁOWIEKA</h4>
+                    <p>Obserwator</p>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem;">Zaburza układ, ale pozostaje indeterministyczna (probabilistyczna).</p>
+                </div>
+                
+                <div class="card">
+                    <h4 style="color: var(--color-success);">⚙️ H₁ - FIZYKA STANDARDOWA</h4>
+                    <p>Mechanika</p>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem;">Losowe siły bez interwencji.</p>
+                </div>
+                
+                <div class="quote">
+                    "Wszechświat tylko wydaje się losowy, gdy wyższe operatory (H<sub>wa</sub>, H<sub>ww</sub>) są ignorowane."
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🧠 Mentalne Narzędzia Kwantowe (MNK)</h2>
+            
+            <p style="color: var(--color-text-secondary); font-size: 1.1rem; margin-bottom: 30px;">
+                Jeśli ciało jest komputerem kwantowym, MNK to aktualizacja oprogramowania wymagana do jego efektywnego działania.
+            </p>
+
+            <div class="grid">
+                <div class="card">
+                    <h4>🧩 Proteza Kognitywna</h4>
+                    <p><strong>Funkcja:</strong> Czyszczenie pamięci podręcznej neuronów</p>
+                    <p>Używana gdy sen jest niewystarczający. Usuwa toksyczne emocje i zapobiega przeciążeniu systemu.</p>
+                </div>
+                
+                <div class="card">
+                    <h4>🛡️ Eliksir Życia</h4>
+                    <p><strong>Funkcja:</strong> Bio-hacking & Neuro-hacking</p>
+                    <p>Optymalizacja parametrów życiowych dla długowieczności i komfortu.</p>
+                </div>
+                
+                <div class="card">
+                    <h4>🎯 Rezonans Kwantowy</h4>
+                    <p><strong>Funkcja:</strong> Zewnętrzne wyrównanie</p>
+                    <p>Użycie muzyki i częstotliwości wizualnych do wymuszenia wyrównania gdy wewnętrzna wola jest słaba.</p>
+                </div>
+                
+                <div class="card">
+                    <h4>🌟 Wizualizacja & Afirmacja</h4>
+                    <p><strong>Funkcja:</strong> Selekcja superpozycji</p>
+                    <p>Kolapowanie funkcji falowej w konkretną pożądaną rzeczywistość za pomocą Wolnej Woli.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>⚡ Praktyczne Ćwiczenia MNK</h2>
+            
+            <div class="exercise">
+                <div class="exercise-title">Ćwiczenie 1: Algorytm Kamienia Filozoficznego</div>
+                <p><strong>Cel:</strong> Rozwiązywanie problemów poprzez matematykę kwantową</p>
+                
+                <div class="formula-explanation">
+                    <strong>Formuła:</strong> P + (-P) = {0}
+                    <p>Splątując problem z jego "anty-problemem", osiągamy Zero Ontologiczne.</p>
+                </div>
+                
+                <div class="steps">
+                    <div class="step">
+                        <span class="step-number">Krok 1:</span>
+                        Zidentyfikuj problem (P). Sformułuj go jasno i konkretnie.
+                    </div>
+                    <div class="step">
+                        <span class="step-number">Krok 2:</span>
+                        Zdefiniuj rozwiązanie (-P). Co jest dokładnie przeciwieństwem Twojego problemu?
+                    </div>
+                    <div class="step">
+                        <span class="step-number">Krok 3:</span>
+                        Cykl splątań: Wizualizuj problem i rozwiązanie jednocześnie przez 5 minut dziennie.
+                    </div>
+                    <div class="step">
+                        <span class="step-number">Krok 4:</span>
+                        Obserwuj redukcję: 1/2(-P) → 3/4(-P) → Pełne (-P). Problem rozpuszcza się.
+                    </div>
+                </div>
+                
+                <button class="interactive-btn" onclick="startTimer(300)">Rozpocznij 5-minutową praktykę</button>
+            </div>
+
+            <div class="exercise">
+                <div class="exercise-title">Ćwiczenie 2: Neurasocjacja - Przeprogramowanie Lęku</div>
+                <p><strong>Cel:</strong> Kolapsu funkcji falowej w psychologii - zamiana lęku w motywację</p>
+                
+                <div class="steps">
+                    <div class="step">
+                        <span class="step-number">Krok 1:</span>
+                        <strong>Identyfikacja:</strong> Uznaj lęk przed trudnością (np. "Excel mnie przytłacza").
+                    </div>
+                    <div class="step">
+                        <span class="step-number">Krok 2:</span>
+                        <strong>Kotwiczenie:</strong> Przypomnij sobie stan 'Flow' z innego obszaru (np. siłownia, gra, hobby).
+                    </div>
+                    <div class="step">
+                        <span class="step-number">Krok 3:</span>
+                        <strong>Transfer:</strong> Nałóż emocję 'Sukcesu' na obraz zadania. Wyobraź sobie siebie wykonującego zadanie z tą samą łatwością.
+                    </div>
+                    <div class="step">
+                        <span class="step-number">Krok 4:</span>
+                        <strong>Działanie:</strong> Wykonaj najmniejszy możliwy krok w zadaniu (1 minuta). Powtórz proces.
+                    </div>
+                </div>
+                
+                <p style="color: var(--color-text-secondary); margin-top: 15px;">
+                    <em>Nadpisujesz stary program emocjonalny nowym stanem kwantowym.</em>
+                </p>
+            </div>
+
+            <div class="exercise">
+                <div class="exercise-title">Ćwiczenie 3: Biohacker's Toolkit - Zmiana Stanu</div>
+                <p><strong>Cel:</strong> Natychmiastowa zmiana fizjologii dla odblokowania umysłu</p>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h4>🏃 RUCH</h4>
+                        <p>3 minuty intensywnego ruchu</p>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted);">Podskoki, przysiady, pompki - wyrzut dopaminy resetuje układ nerwowy.</p>
+                        <button class="interactive-btn" onclick="startTimer(180)">Timer 3 min</button>
+                    </div>
+                    
+                    <div class="card">
+                        <h4>❄️ ZIMNO</h4>
+                        <p>30 sekund zimnej wody</p>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted);">Zimny prysznic na kark i twarz - reset układu nerwowego.</p>
+                        <button class="interactive-btn" onclick="startTimer(30)">Timer 30 sek</button>
+                    </div>
+                    
+                    <div class="card">
+                        <h4>🌬️ ODDECH</h4>
+                        <p>Oddech Wima Hofa - 30 wdechów</p>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted);">Głęboki wdech, pasywny wydech. Dotlenienie kory przedczołowej.</p>
+                        <button class="interactive-btn" onclick="startBreathing()">Rozpocznij oddychanie</button>
+                    </div>
+                </div>
+                
+                <div class="quote" style="margin-top: 20px;">
+                    "Nie czekaj na motywację. Zmień fizjologię, a umysł podąży za nią."
+                </div>
+            </div>
+
+            <div class="exercise">
+                <div class="exercise-title">Ćwiczenie 4: Koherencja Serca-Mózgu</div>
+                <p><strong>Cel:</strong> Synchronizacja bio-komputera z polem kwantowym</p>
+                
+                <div class="steps">
+                    <div class="step">
+                        <span class="step-number">Krok 1:</span>
+                        Usiądź wygodnie. Zamknij oczy. 2 minuty skupienia na oddechu.
+                    </div>
+                    <div class="step">
+                        <span class="step-number">Krok 2:</span>
+                        Przenieś uwagę do centrum klatki piersiowej (okolica serca).
+                    </div>
+                    <div class="step">
+                        <span class="step-number">Krok 3:</span>
+                        Wyobraź sobie, że oddychasz przez serce. Wdech - rozszerzenie. Wydech - kurczenie.
+                    </div>
+                    <div class="step">
+                        <span class="step-number">Krok 4:</span>
+                        Przywołaj uczucie wdzięczności lub miłości. Utrzymuj przez 5 minut.
+                    </div>
+                    <div class="step">
+                        <span class="step-number">Krok 5:</span>
+                        W tym stanie sformułuj intencję/afirmację. Poczuj ją jako już spełnioną.
+                    </div>
+                </div>
+                
+                <button class="interactive-btn" onclick="startTimer(420)">Timer 7 minut (2+5)</button>
+                
+                <p style="color: var(--color-text-secondary); margin-top: 15px;">
+                    <em>Koherencja serca-mózgu zwiększa skuteczność H<sub>ww</sub> (Wolnej Woli) w zaburzaniu układu kwantowego.</em>
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🎯 Model Zintegrowany: Homo Sapiens Quantum</h2>
+            
+            <div class="grid">
+                <div class="card" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.1) 100%); border-color: #f59e0b;">
+                    <h4 style="color: #f59e0b;">🌟 DUSZA (ezoFizyka)</h4>
+                    <p><strong>Użytkownik</strong></p>
+                    <p>H<sub>wa</sub> + H<sub>ww</sub></p>
+                    <p style="font-size: 0.9rem; color: var(--color-text-secondary);">Świadomość sprawcza w polu kwantowym. Level Software.</p>
+                </div>
+                
+                <div class="card" style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(14, 165, 233, 0.1) 100%); border-color: var(--color-accent);">
+                    <h4 style="color: var(--color-accent);">🧠 UMYSŁ (Neurohacking)</h4>
+                    <p><strong>System Operacyjny</strong></p>
+                    <p>Wolność od lęków</p>
+                    <p style="font-size: 0.9rem; color: var(--color-text-secondary);">Zarządzanie stanem Flow. Level Middleware.</p>
+                </div>
+                
+                <div class="card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.1) 100%); border-color: var(--color-success);">
+                    <h4 style="color: var(--color-success);">💪 CIAŁO (Biohacking)</h4>
+                    <p><strong>Hardware</strong></p>
+                    <p>Punkt Zero</p>
+                    <p style="font-size: 0.9rem; color: var(--color-text-secondary);">Brak stanów zapalnych. Stabilna energia. Level Hardware.</p>
+                </div>
+            </div>
+            
+            <div class="quote" style="margin-top: 30px;">
+                "Pełna koherencja między sercem, mózgiem a polem kwantowym = Homo Sapiens Quantum"
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <p style="font-size: 1.2rem; color: var(--color-text-secondary);">
+                    Nie jesteśmy już ofiarami biologicznego przypadku.<br>
+                    Uznając Dwupoziomową Rzeczywistość i wykorzystując Wolną Wolę (H<sub>ww</sub>),<br>
+                    przechodzimy od nieświadomej adaptacji do świadomego kreowania.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(14, 165, 233, 0.05) 100%); border: 2px solid var(--color-accent);">
+            <h2 style="text-align: center;">🔮 Paradoks Sukcesu</h2>
+            
+            <div style="text-align: center; padding: 40px 20px;">
+                <h3 style="font-size: 2.5rem; margin-bottom: 30px; color: var(--color-accent);">
+                    Odpierdol się od siebie i działaj.
+                </h3>
+                
+                <p style="font-size: 1.3rem; color: var(--color-text-secondary); line-height: 1.8; max-width: 800px; margin: 0 auto;">
+                    Im bardziej odpuszczasz kurczową kontrolę (zaufanie do H<sub>wa</sub>),<br>
+                    tym skuteczniejsza jest Twoja <span class="highlight">Wolna Wola (H<sub>ww</sub>)</span>.
+                </p>
+                
+                <div class="quote" style="margin-top: 40px; font-size: 1.2rem;">
+                    "Jaskinia, do której boisz się wejść, skrywa skarb, którego szukasz."
+                </div>
+                
+                <p style="margin-top: 30px; font-size: 1.1rem; color: var(--color-text-muted);">
+                    Zacznij od małych kroków.<br>
+                    Miej świadomość nieskończonego potencjału.
+                </p>
+            </div>
+        </section>
+
+        <div id="timerModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 1000; align-items: center; justify-content: center;">
+            <div style="text-align: center; padding: 40px; background: var(--color-bg-elevated); border-radius: 20px; border: 2px solid var(--color-accent);">
+                <h3 style="color: var(--color-accent); margin-bottom: 20px;">Timer Praktyki</h3>
+                <div class="timer-display" id="timerDisplay">00:00</div>
+                <button class="interactive-btn" onclick="stopTimer()">Zakończ</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>🌌 ezoFizyka - Kwantowy Software Ciała i Duszy</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                Fizyczny świat to tylko wydruk. Duchowy świat to kod źródłowy.<br>
+                Nie walcz z wydrukiem. <span class="highlight">Edytuj kod.</span>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        let timerInterval;
+        let breathCount = 0;
+
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function startTimer(seconds) {
+            const modal = document.getElementById('timerModal');
+            const display = document.getElementById('timerDisplay');
+            modal.style.display = 'flex';
+            
+            let remaining = seconds;
+            updateDisplay(remaining);
+            
+            timerInterval = setInterval(() => {
+                remaining--;
+                updateDisplay(remaining);
+                
+                if (remaining <= 0) {
+                    clearInterval(timerInterval);
+                    playSound();
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                        alert('✨ Praktyka zakończona! Świetna robota!');
+                    }, 1000);
+                }
+            }, 1000);
+        }
+
+        function updateDisplay(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            document.getElementById('timerModal').style.display = 'none';
+        }
+
+        function startBreathing() {
+            breathCount = 0;
+            const modal = document.getElementById('timerModal');
+            const display = document.getElementById('timerDisplay');
+            modal.style.display = 'flex';
+            
+            function breathCycle() {
+                if (breathCount >= 30) {
+                    display.textContent = 'Wstrzymaj oddech!';
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                        alert('✨ Cykl oddechowy zakończony! Poczuj przepływ energii.');
+                    }, 2000);
+                    return;
+                }
+                
+                breathCount++;
+                display.textContent = `Oddech ${breathCount}/30`;
+                display.style.transform = 'scale(1.2)';
+                
+                setTimeout(() => {
+                    display.style.transform = 'scale(1)';
+                    setTimeout(breathCycle, 1000);
+                }, 1500);
+            }
+            
+            breathCycle();
+        }
+
+        function playSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 528;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 1);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                stopTimer();
+            }
+        });
+    </script>
+</body>
+</html>
